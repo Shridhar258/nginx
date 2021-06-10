@@ -18,8 +18,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh "sudo docker stop nginx"
-                sh "sudo docker run -d -p 8081:80 nginx:green"
+                sh "sudo docker run -d -p 8082:80 nginx:green"
             }
         }
     }
