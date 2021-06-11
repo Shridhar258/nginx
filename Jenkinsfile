@@ -6,19 +6,17 @@ pipeline {
             steps {
                 echo 'pull'
                 sh "ls -l"
+                docker.build('nginx')
             }
         }
-        stage('Test') {
+        stage('Push') {
             steps {
-                echo 'docker build'
-                sh "sudo docker build -t nginx:green ."
-                sh "sudo docker images -a"
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-                sh "sudo docker run -d -p 8082:80 nginx:green"
+                echo 'docker push to ECR'
+                docker.withRegistry('https://1234567890.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:nginx-ecr-credentials')
+                {
+                    docker.image('nginx').push('latest')
+                }
+
             }
         }
     }
