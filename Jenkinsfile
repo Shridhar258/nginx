@@ -12,8 +12,8 @@ pipeline {
         stage('Push') {
             steps {
                 echo 'docker push to ECR'
-                sh "docker tag jenkins 930650205391.dkr.ecr.region.amazonaws.com/jenkins"
-                sh "docker push 930650205391.dkr.ecr.region.amazonaws.com/jenkins"
+                sh "docker tag jenkins 930650205391.dkr.ecr.us-east-1.amazonaws.com/jenkins"
+                sh "docker push 930650205391.dkr.ecr.us-east-1.amazonaws.com/jenkins"
 
             }
         }
