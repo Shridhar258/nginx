@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'pull'
                 sh "ls -l"
-                docker.build('jenkins')
+                sh "sudo docker build -t jenkins ."
             }
         }
         stage('Push') {
