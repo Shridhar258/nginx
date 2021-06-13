@@ -6,6 +6,10 @@ pipeline {
             steps {
                 echo 'pull'
                 sh "ls -l"
+                sh "whoami"
+                sh "pwd"
+                sh "printenv"
+                sh "sudo systemctl status docker.socket"
                 sh "docker build -t jenkins:${GIT_COMMIT} ."
             }
         }
