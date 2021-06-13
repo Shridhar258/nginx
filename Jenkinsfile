@@ -10,7 +10,8 @@ pipeline {
                 sh "pwd"
                 sh "printenv"
                 sh "sudo systemctl status docker.socket"
-                sh "docker build -t jenkins:${GIT_COMMIT} ."
+
+                sh "sudo docker build -t jenkins:${GIT_COMMIT} ."
             }
         }
         stage('Push') {
