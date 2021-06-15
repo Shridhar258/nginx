@@ -1,8 +1,9 @@
 pipeline {
     agent any
-    //environment {
+    environment {
         //REPO_NAME = """${JOB_BASE_NAME}.toLowerCase()"""
-    //}
+        REPO_NAME = """jenkins"""
+    }
     stages {
         stage('Build') {
             steps {
