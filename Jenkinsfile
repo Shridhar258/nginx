@@ -19,14 +19,15 @@ pipeline {
                 sh "sudo docker tag jenkins:${GIT_COMMIT} 930650205391.dkr.ecr.us-east-1.amazonaws.com/jenkins:${GIT_COMMIT}"
                 sh "sudo docker tag jenkins:${GIT_COMMIT} 930650205391.dkr.ecr.us-east-1.amazonaws.com/jenkins:${BUILD_NUMBER}"
                 sh "aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 930650205391.dkr.ecr.us-east-1.amazonaws.com"
-                sh '''echo error | output=$(aws ecr describe-repositories --repository-names jenkins1 2>&1)
+                sh '''echo error | output=$(aws ecr describe-repositories --repository-names ${REPO_NAME} 2>&1)
                 if [ $? -ne 0 ]; then
                     if echo ${output} | grep -q RepositoryNotFoundException; then
-                        aws ecr create-repository --repository-name jenkins1
+                        aws ecr create-repository --repository-name ${REPO_NAME}
                     else
                         >&2 echo ${output}
-                    fi
+                   fi
                 fi'''
+
                 sh "sudo docker push 930650205391.dkr.ecr.us-east-1.amazonaws.com/jenkins:${GIT_COMMIT}"
                 sh "sudo docker push 930650205391.dkr.ecr.us-east-1.amazonaws.com/jenkins:${BUILD_NUMBER}"
 
