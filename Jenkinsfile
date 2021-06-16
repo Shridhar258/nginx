@@ -1,13 +1,13 @@
 pipeline {
     agent any
-    environment {
-        //REPO_NAME = """${JOB_BASE_NAME}.toLowerCase()"""
-        REPO_NAME = """jenkins11"""
+    env {
+        REPO_NAME = """${JOB_BASE_NAME}.toLowerCase();"""
+        //REPO_NAME = """jenkins11"""
     }
     stages {
         stage('Build') {
             steps {
-                echo 'pull'
+                echo 'pull ${REPO_NAME}'
                 sh "ls -l"
                 sh "whoami"
                 sh "pwd"
