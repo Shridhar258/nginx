@@ -7,8 +7,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "${REPO_NAME}" 
-                echo "pull '${REPO_NAME}'"
+                echo '${REPO_NAME}' 
+                echo 'pull ${REPO_NAME}'
                 sh "ls -l"
                 sh "whoami"
                 sh "pwd"
