@@ -1,13 +1,13 @@
 pipeline {
     agent any
     environment {
-        REPO_NAME = """${JOB_BASE_NAME}.toLowerCase();"""
-        //REPO_NAME = """jenkins11"""
+        //REPO_NAME = """${JOB_BASE_NAME}.toLowerCase()"""
+        REPO_NAME = """jenkins11"""
     }
     stages {
         stage('Build') {
             steps {
-                echo 'pull ${REPO_NAME}'
+                echo 'pull'
                 sh "ls -l"
                 sh "whoami"
                 sh "pwd"
@@ -21,7 +21,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS')  {
                     sh "aws ecr describe-repositories --repository-name ${REPO_NAME}"
                 }
-                catchError(buildResult: 'SUCCESS')  {
+                catchError(buildResult: 'SUCCESS')
                     sh "aws ecr create-repository --repository-name ${REPO_NAME}"
                 }
             }
