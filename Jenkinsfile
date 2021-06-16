@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    env {
+    environment {
         REPO_NAME = """${JOB_BASE_NAME}.toLowerCase();"""
         //REPO_NAME = """jenkins11"""
     }
