@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         REPO_NAME1 = "${JOB_BASE_NAME}"
-        REPO_NAME=echo ${REPO_NAME1} | tr '[:upper:]' '[:lower:]'
+        REPO_NAME = echo "${REPO_NAME1}" | tr '[:upper:]' '[:lower:]'
         //REPO_NAME = """jenkins11"""
     }
     stages {
