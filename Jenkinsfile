@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'sudo docker push to ECR'
                 sh "output=\$(aws ecr describe-repositories --repository-names ${REPO_NAME} 2>&1)"
-                sh "if [ $? -ne 0 ]; then"
+                sh "if [ \$? -ne 0 ]; then"
                 sh    "if echo ${output} | grep -q RepositoryNotFoundException; then"
                 sh        "aws ecr create-repository --repository-name ${REPO_NAME}"
                 sh    "else"
