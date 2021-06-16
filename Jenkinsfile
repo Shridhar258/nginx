@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         //REPO_NAME = """${JOB_BASE_NAME}.toLowerCase()"""
-        REPO_NAME = """jenkins5"""
+        REPO_NAME = """jenkins"""
     }
     stages {
         stage('Build') {
@@ -18,24 +18,15 @@ pipeline {
         }
         stage('Push') {
             steps {
-                echo 'sudo docker push to ECR'
-                sh "output=\$(aws ecr describe-repositories --repository-names ${REPO_NAME} 2>&1)"
-                if ( $? -ne 0 ); then
+                echo 'sudo docker push to ECR'                
+                output=$(aws ecr describe-repositories --repository-names ${REPO_NAME} 2>&1)
+                if [ $? -ne 0 ]; then
                     if echo ${output} | grep -q RepositoryNotFoundException; then
                         aws ecr create-repository --repository-name ${REPO_NAME}
                     else
                         >&2 echo ${output}
                     fi
-                fi'''
-
-                /*sh "output=\$(aws ecr describe-repositories --repository-names ${REPO_NAME} 2>&1)"
-                sh "if [ \$? -ne 0 ]; then"
-                sh    "if echo ${output} | grep -q RepositoryNotFoundException; then"
-                sh        "aws ecr create-repository --repository-name ${REPO_NAME}"
-                sh    "else"
-                sh        ">&2 echo ${output}"
-                sh    "fi"
-                sh "fi"*/
+                fi
                 // sh "if ! ${aws ecr describe-repositories --repository-name ${REPO_NAME}}; then aws ecr create-repository --repository-name ${REPO_NAME};fi"
                 sh "sudo docker tag ${REPO_NAME}:${GIT_COMMIT} 930650205391.dkr.ecr.us-east-1.amazonaws.com/${REPO_NAME}:${GIT_COMMIT}"
                 sh "sudo docker tag ${REPO_NAME}:${GIT_COMMIT} 930650205391.dkr.ecr.us-east-1.amazonaws.com/${REPO_NAME}:${BUILD_NUMBER}"
