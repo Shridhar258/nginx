@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                def REPO_NAME  = REPO_NAME1.toLowerCase(); 
+                wREPO_NAME  = REPO_NAME1.toLowerCase(); 
                 echo 'pull'
                 sh "ls -l"
                 sh "whoami"
