@@ -23,7 +23,7 @@ pipeline {
                 sh "if [ \$? -ne 0 ]; then"
                     sh "if echo ${output} | grep -q RepositoryNotFoundException; then"
                         sh "aws ecr create-repository --repository-name ${REPO_NAME}"
-                    else
+                    sh "else"
                         sh ">&2 echo ${output}"
                     fi
                 fi
