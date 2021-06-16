@@ -21,7 +21,9 @@ pipeline {
                 catchError {
                     sh "aws ecr describe-repositories --repository-name ${REPO_NAME}"
                 }
-                sh "aws ecr create-repository --repository-name ${REPO_NAME}"
+                catchError {
+                    sh "aws ecr create-repository --repository-name ${REPO_NAME}"
+                }
             }
         }
         stage('Push') {
@@ -33,7 +35,6 @@ pipeline {
                 sh "aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 930650205391.dkr.ecr.us-east-1.amazonaws.com"
                 sh "sudo docker push 930650205391.dkr.ecr.us-east-1.amazonaws.com/${REPO_NAME}:${GIT_COMMIT}"
                 sh "sudo docker push 930650205391.dkr.ecr.us-east-1.amazonaws.com/${REPO_NAME}:${BUILD_NUMBER}"
-
             }
         }
     }
