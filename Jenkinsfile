@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         REPO_NAME1 = "${JOB_BASE_NAME}"
-        REPO_NAME = REPO_NAME.toLowerCase()
+        REPO_NAME = REPO_NAME1.toLowerCase()
         //REPO_NAME = """jenkins11"""
     }
     stages {
