@@ -1,13 +1,12 @@
 pipeline {
     agent any
     environment {
-        REPO_NAME = "${JOB_BASE_NAME}"
+        REPO_NAME = "${JOB_BASE_NAME}.toLowercase()"
         //REPO_NAME = """jenkins11"""
     }
     stages {
         stage('Build') {
             steps {
-                sh "${REPO_NAME} = echo ${REPO_NAME} | tr '[:upper:]' '[:lower:]' "
                 sh "echo '${REPO_NAME}' "
                 echo 'pull'
                 sh "ls -l"
