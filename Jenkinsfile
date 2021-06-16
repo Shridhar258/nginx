@@ -2,12 +2,12 @@ pipeline {
     agent any
     environment {
         REPO_NAME = "${JOB_BASE_NAME}"
-        println(REPO_NAME.toLowerCase());
         //REPO_NAME = """jenkins11"""
     }
     stages {
         stage('Build') {
             steps {
+                println(REPO_NAME.toLowerCase());
                 echo '${REPO_NAME}' 
                 echo 'pull ${REPO_NAME}'
                 sh "ls -l"
