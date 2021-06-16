@@ -16,20 +16,18 @@ pipeline {
                 sh "sudo docker build -t ${REPO_NAME}:${GIT_COMMIT} ."
             }
         }
+        stage('REPO')  {
+            steps {
+                catchError {
+                    sh "aws ecr describe-repositories --repository-name ${REPO_NAME}"
+                }
+                sh "aws ecr create-repository --repository-name ${REPO_NAME}"
+            }
+        }
         stage('Push') {
             steps {
-                echo 'sudo docker push to ECR'                
-                sh '''
-                    output=\$(aws ecr describe-repositories --repository-names ${REPO_NAME} 2>&1)
-                    if [ \$? -ne 0 ]; then
-                        if echo ${output} | grep -q RepositoryNotFoundException; then
-                            aws ecr create-repository --repository-name ${REPO_NAME}
-                        else
-                            >&2 echo ${output}
-                        fi
-                    fi
-                '''
-                // sh "if ! ${aws ecr describe-repositories --repository-name ${REPO_NAME}}; then aws ecr create-repository --repository-name ${REPO_NAME};fi"
+                echo 'sudo docker push to ECR'
+                //sh "if ! ${aws ecr describe-repositories --repository-name ${REPO_NAME}}; then aws ecr create-repository --repository-name ${REPO_NAME};fi"
                 sh "sudo docker tag ${REPO_NAME}:${GIT_COMMIT} 930650205391.dkr.ecr.us-east-1.amazonaws.com/${REPO_NAME}:${GIT_COMMIT}"
                 sh "sudo docker tag ${REPO_NAME}:${GIT_COMMIT} 930650205391.dkr.ecr.us-east-1.amazonaws.com/${REPO_NAME}:${BUILD_NUMBER}"
                 sh "aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 930650205391.dkr.ecr.us-east-1.amazonaws.com"
