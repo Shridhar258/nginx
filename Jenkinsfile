@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                REPO_NAME  = REPO_NAME1.toLowerCase(); 
+                echo "$REPO_NAME1" | tr '[:upper:]' '[:lower:]' 
                 echo 'pull'
                 sh "ls -l"
                 sh "whoami"
