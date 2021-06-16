@@ -21,7 +21,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS')  {
                     sh "aws ecr describe-repositories --repository-name ${REPO_NAME}"
                 }
-                catchError(buildResult: 'SUCCESS')
+                catchError(buildResult: 'SUCCESS')  {
                     sh "aws ecr create-repository --repository-name ${REPO_NAME}"
                 }
             }
