@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'sudo docker push to ECR'
                 catchError {
-                    aws ecr describe-repositories --repository-names jenkins 2>&1 > /dev/null
+                    aws ecr describe-repositories --repository-names jenkins
                 }
                 aws ecr create-repository --repository-name jenkins
                 // sh "if ! ${aws ecr describe-repositories --repository-name ${REPO_NAME}}; then aws ecr create-repository --repository-name ${REPO_NAME};fi"
